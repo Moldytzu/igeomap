@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.markercluster-map {
+    height: 90vh;
+    z-index: 0;
+  }

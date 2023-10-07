@@ -2,3 +2,5 @@ matplotlib
 gmalthgtparser
 opencv-python
 scipy
+numpy-stl
+vtkplotlib

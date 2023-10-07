@@ -31,16 +31,16 @@ def genereazaJSON(fisier, index):
 
         # coordonatele patrulaterului
         output += f"coord:["
-        output += f"    [{long}, {lat}],"
-        output += f"    [{long + 1}, {lat + 1}],"
+        output += f"[{long}, {lat}],"
+        output += f"[{long + 1}, {lat + 1}],"
         output += f"],"
 
         # text placeholder
         output += f"text: \"\","
 
         # altitudinea maxima si minima
-        output += f"coordaltmax: [{coordMax[1], coordMax[0]}],"
-        output += f"coordaltmin: [{coordMin[1], coordMin[0]}],"
+        output += f"coordaltmax: [{coordMax[1]}, {coordMax[0]}],"
+        output += f"coordaltmin: [{coordMin[1]}, {coordMin[0]}],"
         output += f"altmax: {coordMax[2]},"
         output += f"altmin: {coordMin[2]},"
         output += f"altmed: {altMed},"

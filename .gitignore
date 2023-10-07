@@ -24,4 +24,4 @@ yarn-error.log*
 
 # dataset
 dataset
-*.pyc
+__pycache__

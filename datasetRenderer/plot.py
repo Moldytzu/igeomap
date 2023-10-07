@@ -3,7 +3,6 @@ from matplotlib import cm
 
 from parser import *  # bibliotea noastra magica
 
-
 def genereazaHeatMapDin(fisier):
     lista = iaPuncteHGT(fisier)
 
@@ -24,7 +23,7 @@ def genereazaHeatMapDin(fisier):
     iesire = iesire.replace("dataset", "render") # schimbam folderul de iesire
 
     # salvam figura
-    plt.savefig(iesire, dpi=250, bbox_inches='tight', pad_inches=0)
+    plt.savefig(iesire, dpi=250 '''calitatea pozei''', bbox_inches='tight', pad_inches=0)
 
     print("plot: gata save")
 

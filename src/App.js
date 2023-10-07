@@ -53,7 +53,6 @@ function App() {
           />
           <LayersControl position="topright">
 
-
             <LayersControl.Overlay checked={true} name="Date HTG preluate din NASA Shuttle Radar Topography Mission Global 1 arc second V003">
 
               <FeatureGroup pathOptions={{ color: 'rgba(128, 0, 128, 0.1)' }}>

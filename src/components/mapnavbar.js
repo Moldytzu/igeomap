@@ -1,4 +1,5 @@
-import { TbAirBalloon, TbInfoCircle, TbSelect, TbSelector, TbSquare, TbSquareArrowDown, TbSquareRoundedArrowDown, TbTools, TbWaveSquare } from "react-icons/tb";
+import { TbAirBalloon, TbInfoCircle, TbSelect, TbSelector, TbSquare, TbSquareArrowDown, TbSquareRoundedArrowDown, TbTools, TbWaveSquare, TbWorld, TbWorldStar } from "react-icons/tb";
+import { Link } from "react-router-dom";
 
 export default function MapNavbar({ children, location }) {
     return (
@@ -10,15 +11,16 @@ export default function MapNavbar({ children, location }) {
                     </label>
                 </div>
             </div>
-            <div className="navbar-center">
-                <a className="btn btn-ghost normal-case text-xl"><TbAirBalloon /> iGeoMap</a>
+            <div className="navbar-center lg:hidden">
+                <Link to='/' className="btn btn-ghost normal-case font-bold text-xl"><TbWorldStar /> igeomap</Link>
             </div>
             <div className="navbar-end">
-                <button className="btn btn-ghost btn-circle">
+                {/*<button className="btn btn-ghost btn-circle">
                     <div className="tooltip tooltip-bottom" data-tip="Select granule">
                         <TbSelect size={23} />
                     </div>
                 </button>
+                */}
 
                 <button className="btn btn-ghost btn-circle">
                     <div className="indicator">

@@ -5,6 +5,7 @@
 
 .markercluster-map {
     height: 90vh;
+    margin-top: 68px !important;
     z-index: 0;
   }
 
@@ -20,4 +21,8 @@
 
   .hero {
     margin-top: 60px !important;
+  }
+
+  .drawer-side {
+    z-index: 100;
   }

@@ -41,7 +41,7 @@ function App() {
           <LayersControl position="topright">
 
 
-            <LayersControl.Overlay name="Nasa Imagery">
+            <LayersControl.Overlay checked={true} name="Nasa Imagery">
 
               <FeatureGroup pathOptions={{ color: 'rgba(128, 0, 128, 0.1)' }}>
                 {granules.map((granule) => (

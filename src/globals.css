@@ -7,3 +7,9 @@
     height: 90vh;
     z-index: 0;
   }
+
+  .granule-map {
+    height: 90vh;
+    width: 100%;
+    z-index: 0;
+  }

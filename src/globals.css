@@ -9,7 +9,15 @@
   }
 
   .granule-map {
-    height: 90vh;
+    height: 80vh;
     width: 100%;
     z-index: 0;
+  }
+
+  .navbar {
+    z-index: 100 !important;
+  }
+
+  .hero {
+    margin-top: 60px !important;
   }

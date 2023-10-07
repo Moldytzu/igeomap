@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 export default function GranulePopup({ granule }) {
     return (
         <Popup>
-            <h1 className="text-2xl font-bold">Granule #{granule.granuleNumber}</h1>
-            <h2><TbWorld className="inline-block" /> {`${granule.coord[0]}, ${granule.coord[1]},`}</h2>
+            <h1 className="font-bold mb-1">Granula #{granule.granuleNumber}</h1>
+            <h2 className="mb-2"><TbWorld className="inline-block" /> {granule.text}</h2>
 
-            <Link to={`/granule/${granule.granuleNumber - 1}/details`} className="btn btn-primary mt-5">View details <TbArrowRight className="inline-block" /></Link>
+            <Link to={`/granule/${granule.granuleNumber - 1}/details`} className="btn-ghost">Afișeză detalii <TbArrowRight className="inline-block" /></Link>
         </Popup>
     )
 }

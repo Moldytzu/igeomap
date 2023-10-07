@@ -2,7 +2,7 @@ import { TbAirBalloon, TbInfoCircle, TbSelect, TbSelector, TbSquare, TbSquareArr
 
 export default function MapNavbar({ children, location }) {
     return (
-        <div className="navbar bg-gradient-to-r from-blue-200 to-cyan-200">
+        <div className="navbar bg-base-100 border-b-4 fixed top-0">
             <div className="navbar-start">
                 <div className="dropdown">
                     <label htmlFor="map_drawer" className="btn btn-ghost btn-circle">

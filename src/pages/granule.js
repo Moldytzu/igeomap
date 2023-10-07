@@ -4,6 +4,7 @@ import { TbArrowDown, TbArrowRight, TbArrowUp, TbCircle, TbCircleFilled, TbDatab
 
 import { MapContainer, TileLayer, FeatureGroup, Rectangle, LayersControl, ImageOverlay, Popup, Circle } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import granules from "../data/granules";
 
 function Details({ granules, id }) {
 
@@ -141,11 +142,13 @@ function SoilComp({ granules, id }) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th>Chernozem</th>
-                                        <th>45.2167° N, 25.7500° E</th>
-                                        <th>SMAP data</th>
-                                    </tr>
+                                    {granules[id].soilComp.map((soil) => (
+                                        <tr>
+                                            <th>{soil.type}</th>
+                                            <th>{soil.coord[0]}, {soil.coord[1]}</th>
+                                            <th>{soil.dataset}</th>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>
@@ -223,17 +226,21 @@ function SoilRes({ granules, id }) {
                                 {/* head */}
                                 <thead>
                                     <tr>
-                                        <th>Tipul Solului</th>
+                                        <th>Numele resursei</th>
+                                        <th>Elementul chimic</th>
                                         <th>Locația</th>
                                         <th>Dataset Sursă</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th>Chernozem</th>
-                                        <th>45.2167° N, 25.7500° E</th>
-                                        <th>SMAP data</th>
-                                    </tr>
+                                    {granules[id].soilRes.map((resource) => (
+                                        <tr>
+                                            <th>{resource.res}</th>
+                                            <th>{resource.element}</th>
+                                            <th> <div onClick={() => { }} className="badge cursor-pointer"><TbLocation className="inline-block mr-2" />{granules[id].coord[0]}, {granules[id].coord[1]}</div> </th>
+                                            <th>{resource.dataset}</th>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>
@@ -305,39 +312,6 @@ export default function GranulePage() {
         { title: "Model 3D al terenului", icon: TbMountain, page: 'elevation_model', element: ElevationModel },
         { title: "Date despre sol", icon: TbDatabaseStar, page: 'soil_details', element: SoilComp },
         { title: "Resurse naturale", icon: TbSun, page: 'soil_composition', element: SoilRes }
-    ]
-
-    const granules = [
-        {
-            coord: [
-                [46.9997222, 25.0002778],
-                [48.0002778, 23.99972222],
-            ],
-            text: "Reprezentare a datelor htg. Cuprinde domenii din județele Maramureș și Bistrița-Năsăud.",
-            granuleNumber: 1,
-            coordaltmax: [46.9997222, 25.0002778],
-            coordaltmin: [48.0002778, 23.99972222],
-            altmax: 2022,
-            altmin: 20,
-            altmed: 500,
-            image: "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2014.11.20/N47E024.SRTMGL1.2.jpg",
-            imagehr: "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2014.11.20/N47E024.SRTMGL1.2.jpg",
-        },
-        {
-            coord: [
-                [46.9997222, 24.9997222],
-                [48.0002778, 26.0002778],
-            ],
-            text: "Reprezentare a datelor htg. Cuprinde domenii din județul Suceava.",
-            granuleNumber: 2,
-            coordaltmax: [46.9997222, 25.0002778],
-            coordaltmin: [48.0002778, 23.99972222],
-            altmax: 2022,
-            altmin: 20,
-            altmed: 500,
-            image: "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2014.11.20/N47E025.SRTMGL1.2.jpg",
-            imagehr: "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2014.11.20/N47E025.SRTMGL1.2.jpg"
-        },
     ]
 
     return (

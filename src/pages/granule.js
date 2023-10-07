@@ -15,31 +15,31 @@ function Details({ granules, id }) {
 
             <div className="hero bg-base-200 lg:mt-0" style={{ height: '100%' }}>
                 <div className="hero-content flex-col xl:flex-row">
-                    <div className="lg:text-left pr-10">
+                    <div className="lg:text-left lg:pr-10">
                         <div className="tooltip cursor-help" data-tip={`Prefixul G#${granules[id].granuleNumber} se referă la numărul granulei preluate de pe Nasa Earthdata`}>
                             <h1 className="text-xl font-bold mb-2">G#{granules[id].granuleNumber} NASA Shuttle Radar Topography Mission Global 1 arc second V003</h1>
                         </div>
                         <p>{granules[id].text}</p>
                         <div className="divider" />
-                        <div class="grid grid-cols-2 gap-3">
+                        <div class="grid grid-cols-2 gap-2 md:gap-3">
                             <div className="card shadow-xl bg-base-100">
                                 <div className="card-body">
-                                    <h2 className="card-title"><TbCircleFilled className="inline-block" style={{ color: 'red' }} /> Punct alt. maximă</h2>
-                                    <p className="font-bold text-5xl mt-2">{granules[id].altmax}m</p>
+                                    <h2 className="card-title text-sm md:text-xl"><TbCircleFilled className="inline-block" style={{ color: 'red' }} /> Punct alt. maximă</h2>
+                                    <p className="font-bold text-3xl md:text-5xl mt-2">{granules[id].altmax}m</p>
                                     <div onClick={() => { }} className="badge cursor-pointer"><TbLocation className="inline-block mr-2" />{granules[id].coordaltmax[0]}, {granules[id].coordaltmax[1]}</div>
                                 </div>
                             </div>
                             <div className="card shadow-xl bg-base-100">
                                 <div className="card-body">
-                                    <h2 className="card-title"><TbCircleFilled className="inline-block" style={{ color: 'green' }} /> Punct alt. minimă</h2>
-                                    <p className="font-bold text-5xl mt-2">{granules[id].altmin}m</p>
+                                    <h2 className="card-title text-sm md:text-xl"><TbCircleFilled className="inline-block" style={{ color: 'green' }} /> Punct alt. minimă</h2>
+                                    <p className="font-bold text-3xl md:text-5xl mt-2">{granules[id].altmin}m</p>
                                     <div onClick={() => { }} className="badge cursor-pointer"><TbLocation className="inline-block mr-2" />{granules[id].coordaltmin[0]}, {granules[id].coordaltmin[1]}</div>
                                 </div>
                             </div>
                             <div className="card shadow-xl bg-base-100">
                                 <div className="card-body">
-                                    <h2 className="card-title"><TbMountain className="inline-block" /> Altitudine medie </h2>
-                                    <p className="font-bold text-5xl mt-2">{granules[id].altmed}m</p>
+                                    <h2 className="card-title text-sm md:text-xl"><TbMountain className="inline-block" /> Altitudine medie </h2>
+                                    <p className="font-bold text-3xl md:text-5xl mt-2">{granules[id].altmed}m</p>
                                 </div>
                             </div>
                             <div className="card shadow-xl bg-base-100 ">
@@ -264,6 +264,13 @@ export default function GranulePage() {
                             <granulePage.element granules={granules} id={id} />
                         ) : (<></>)
                     ))}
+                    <div className="btm-nav lg:hidden">
+                        {granulePages.map((granulePage) => (
+                            <Link to={`/granule/${id}/${granulePage.page}`} className={`font-bold ${page == granulePage.page ? 'active' : ''}`}>
+                                <granulePage.icon />
+                            </Link>
+                        ))}
+                    </div>
                 </div>
                 <div className="drawer-side border-r-4 overflow-hidden">
                     <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>

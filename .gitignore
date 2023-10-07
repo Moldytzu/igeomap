@@ -25,3 +25,9 @@ yarn-error.log*
 # dataset
 dataset
 __pycache__
+
+# renderuri
+*.stl
+
+# per-programmer configs
+.vscode

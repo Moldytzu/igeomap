@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import MapNavbar from "../components/mapnavbar";
-import { TbArrowDown, TbArrowRight, TbArrowUp, TbCircle, TbCircleFilled, TbDatabase, TbDatabaseStar, TbLocation, TbMap, TbMountain, TbPlane, TbSun, TbWorld, TbWorldStar } from "react-icons/tb";
+import { TbArrowDown, TbArrowRight, TbArrowUp, TbCircle, TbCircleFilled, TbDatabase, TbDatabaseLeak, TbDatabaseStar, TbLocation, TbMap, TbMountain, TbPlane, TbSun, TbWorld, TbWorldStar } from "react-icons/tb";
 
 import { MapContainer, TileLayer, FeatureGroup, Rectangle, LayersControl, ImageOverlay, Popup, Circle } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -25,12 +25,14 @@ function Details({ granules, id }) {
                             <div className="card shadow-xl bg-base-100">
                                 <div className="card-body">
                                     <h2 className="card-title"><TbCircleFilled className="inline-block" style={{ color: 'red' }} /> Punct alt. maximă</h2>
+                                    <p className="font-bold text-5xl mt-2">{granules[id].altmax}m</p>
                                     <div onClick={() => { }} className="badge cursor-pointer"><TbLocation className="inline-block mr-2" />{granules[id].coordaltmax[0]}, {granules[id].coordaltmax[1]}</div>
                                 </div>
                             </div>
                             <div className="card shadow-xl bg-base-100">
                                 <div className="card-body">
                                     <h2 className="card-title"><TbCircleFilled className="inline-block" style={{ color: 'green' }} /> Punct alt. minimă</h2>
+                                    <p className="font-bold text-5xl mt-2">{granules[id].altmin}m</p>
                                     <div onClick={() => { }} className="badge cursor-pointer"><TbLocation className="inline-block mr-2" />{granules[id].coordaltmin[0]}, {granules[id].coordaltmin[1]}</div>
                                 </div>
                             </div>
@@ -44,7 +46,7 @@ function Details({ granules, id }) {
                                 <div className="card-body">
                                     <TbDatabaseStar className="inline-block" />
                                     <h2 className="card-title"> Date despre compoziția solului și resurse minerale</h2>
-                                    <Link to={`/granule/${id}/soil_data`} className="btn-ghost text-xs text-blue-600">Navigează la date despre sol <TbArrowRight className="inline-block" /></Link>
+                                    <Link to={`/granule/${id}/soil_details`} className="btn-ghost text-xs text-blue-600">Navigează la date despre sol <TbArrowRight className="inline-block" /></Link>
                                 </div>
                             </div>
                         </div>
@@ -87,7 +89,7 @@ function Details({ granules, id }) {
 
                                         <Circle center={granules[id].coordaltmin} pathOptions={{ color: 'green', fillColor: 'green', opacity: 1, fillOpacity: 1 }} radius={2000} stroke={false}>
                                             <Popup>
-                                                <p>Coordonatele punctului cel mai înalt de pe hartă</p>
+                                                <p>Punctul de altiutudine minimă</p>
                                             </Popup>
                                         </Circle>
 
@@ -127,178 +129,115 @@ function SoilComp({ granules, id }) {
 
     return (
         <div className="hero bg-base-200">
-
-            <div className="hero bg-base-200 lg:mt-0" style={{ height: '100%' }}>
-                <div className="hero-content flex-col xl:flex-row">
-                    <div className="lg:text-left pr-10">
-                        <div className="overflow-x-auto">
-                            <table className="table">
-                                {/* head */}
-                                <thead>
-                                    <tr>
-                                        <th>Tipul Solului</th>
-                                        <th>Locația</th>
-                                        <th>Dataset Sursă</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {granules[id].soilComp.map((soil) => (
-                                        <tr>
-                                            <th>{soil.type}</th>
-                                            <th>{soil.coord[0]}, {soil.coord[1]}</th>
-                                            <th>{soil.dataset}</th>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+            {JSON.stringify(granules[id].soilComp) == "[]" ? (
+                <div className="hero bg-base-200">
+                    <div className="hero-content text-center">
+                        <div className="max-w-md">
+                            <h1 className="text-5xl font-bold"><TbDatabaseLeak /></h1>
+                            <p className="py-6 font-bold">Nu există date despre sol în teritoriul selectat.</p>
                         </div>
                     </div>
-
-                    <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                        <MapContainer className="granule-map" center={center} zoom={9.40} scrollWheelZoom={false}>
-                            <TileLayer
-                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                            />
-                            <LayersControl position="topright">
-
-                                <LayersControl.Overlay checked={true} name={`Reprezentarea datelor htg pentru teritoriul G#${id + 1}`}>
-
-                                    <FeatureGroup pathOptions={{ color: 'rgba(128, 0, 128, 0.20)' }}>
-
-                                        <Rectangle bounds={granules[id].coord} />
-
-                                        <ImageOverlay
-                                            url={granules[id].image}
-                                            bounds={granules[id].coord}
-                                            opacity={0.7}
-                                            zIndex={0}
-                                        />
-
-                                    </FeatureGroup>
-
-                                </LayersControl.Overlay>
-
-                                <LayersControl.Overlay checked={true} name={`Punctele extreme ale altitudinii din teritoriul G#${id + 1}`}>
-
-                                    <FeatureGroup pathOptions={{ color: 'rgba(128, 0, 128, 0.20)' }}>
-
-                                        <Circle center={granules[id].coordaltmax} pathOptions={{ color: 'red', fillColor: 'red', opacity: 1, fillOpacity: 1 }} radius={2000} stroke={false}>
-                                            <Popup>
-                                                <p>Coordonatele punctului cel mai înalt de pe hartă</p>
-                                            </Popup>
-                                        </Circle>
-
-                                        <Circle center={granules[id].coordaltmin} pathOptions={{ color: 'green', fillColor: 'green', opacity: 1, fillOpacity: 1 }} radius={2000} stroke={false}>
-                                            <Popup>
-                                                <p>Coordonatele punctului cel mai înalt de pe hartă</p>
-                                            </Popup>
-                                        </Circle>
-
-                                    </FeatureGroup>
-
-                                </LayersControl.Overlay>
-
-
-
-
-                            </LayersControl>
-                        </MapContainer>
-                    </div>
                 </div>
-            </div>
+            ) : (
 
-        </div>
-    )
-}
-
-function SoilRes({ granules, id }) {
-    const center = [(granules[id].coord[0][0] + granules[id].coord[1][0]) / 2, (granules[id].coord[0][1] + granules[id].coord[1][1]) / 2];
-
-    return (
-        <div className="hero bg-base-200">
-
-            <div className="hero bg-base-200 lg:mt-0" style={{ height: '100%' }}>
-                <div className="hero-content flex-col xl:flex-row">
-                    <div className="lg:text-left pr-10">
-                        <div className="overflow-x-auto">
-                            <table className="table">
-                                {/* head */}
-                                <thead>
-                                    <tr>
-                                        <th>Numele resursei</th>
-                                        <th>Elementul chimic</th>
-                                        <th>Locația</th>
-                                        <th>Dataset Sursă</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {granules[id].soilRes.map((resource) => (
+                <div className="hero bg-base-200 lg:mt-0" style={{ height: '100%' }}>
+                    <div className="hero-content flex-col xl:flex-row">
+                        <div className="lg:text-left pr-10">
+                            <div className="overflow-x-auto">
+                                <table className="table">
+                                    {/* head */}
+                                    <thead>
                                         <tr>
-                                            <th>{resource.res}</th>
-                                            <th>{resource.element}</th>
-                                            <th> <div onClick={() => { }} className="badge cursor-pointer"><TbLocation className="inline-block mr-2" />{granules[id].coord[0]}, {granules[id].coord[1]}</div> </th>
-                                            <th>{resource.dataset}</th>
+                                            <th>Tipul Solului</th>
+                                            <th>Locația</th>
+                                            <th>Dataset Sursă</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+
+                                        {granules[id].soilComp.map((soil) => (
+                                            <tr>
+                                                <th>{soil.type}</th>
+                                                <th>{soil.coord[0]}, {soil.coord[1]}</th>
+                                                <th>{soil.dataset}</th>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+                            <MapContainer className="granule-map" center={center} zoom={9.40} scrollWheelZoom={false}>
+                                <TileLayer
+                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                />
+                                <LayersControl position="topright">
+
+                                    <LayersControl.Overlay name={`Reprezentarea datelor htg pentru teritoriul G#${parseInt(id) + 1}`}>
+
+                                        <FeatureGroup pathOptions={{ color: 'rgba(128, 0, 128, 0.20)' }}>
+
+                                            <Rectangle bounds={granules[id].coord} />
+
+                                            <ImageOverlay
+                                                url={granules[id].image}
+                                                bounds={granules[id].coord}
+                                                opacity={0.7}
+                                                zIndex={0}
+                                            />
+
+                                        </FeatureGroup>
+
+                                    </LayersControl.Overlay>
+
+                                    <LayersControl.Overlay checked={false} name={`Punctele extreme ale altitudinii din teritoriul G#${parseInt(id) + 1}`}>
+
+                                        <FeatureGroup pathOptions={{ color: 'rgba(128, 0, 128, 0.20)' }}>
+
+                                            <Circle center={granules[id].coordaltmax} pathOptions={{ color: 'red', fillColor: 'red', opacity: 1, fillOpacity: 1 }} radius={2000} stroke={false}>
+                                                <Popup>
+                                                    <p>Coordonatele punctului cel mai înalt de pe hartă</p>
+                                                </Popup>
+                                            </Circle>
+
+                                            <Circle center={granules[id].coordaltmin} pathOptions={{ color: 'green', fillColor: 'green', opacity: 1, fillOpacity: 1 }} radius={2000} stroke={false}>
+                                                <Popup>
+                                                    <p>Coordonatele punctului cel mai înalt de pe hartă</p>
+                                                </Popup>
+                                            </Circle>
+
+                                        </FeatureGroup>
+
+                                    </LayersControl.Overlay>
+
+                                    <LayersControl.Overlay checked={true} name={`Locațiile cu date despre sol din teritoriul G#${parseInt(id) + 1}`}>
+
+                                        <FeatureGroup pathOptions={{ color: 'rgba(128, 0, 128, 0.20)' }}>
+
+                                            {granules[id].soilComp.map((soilCompx) => (
+                                                <Circle center={soilCompx.coord} pathOptions={{ color: 'blue', fillColor: 'blue', opacity: 1, fillOpacity: 1 }} radius={2000} stroke={false}>
+                                                    <Popup>
+                                                        <p className="font-bold text-xl">{soilCompx.type}</p>
+                                                    </Popup>
+                                                </Circle>
+                                            ))}
+
+                                        </FeatureGroup>
+
+                                    </LayersControl.Overlay>
+
+
+
+
+                                </LayersControl>
+                            </MapContainer>
                         </div>
                     </div>
-
-                    <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                        <MapContainer className="granule-map" center={center} zoom={9.40} scrollWheelZoom={false}>
-                            <TileLayer
-                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                            />
-                            <LayersControl position="topright">
-
-                                <LayersControl.Overlay checked={true} name={`Reprezentarea datelor htg pentru teritoriul G#${id + 1}`}>
-
-                                    <FeatureGroup pathOptions={{ color: 'rgba(128, 0, 128, 0.20)' }}>
-
-                                        <Rectangle bounds={granules[id].coord} />
-
-                                        <ImageOverlay
-                                            url={granules[id].image}
-                                            bounds={granules[id].coord}
-                                            opacity={0.7}
-                                            zIndex={0}
-                                        />
-
-                                    </FeatureGroup>
-
-                                </LayersControl.Overlay>
-
-                                <LayersControl.Overlay checked={true} name={`Punctele extreme ale altitudinii din teritoriul G#${id + 1}`}>
-
-                                    <FeatureGroup pathOptions={{ color: 'rgba(128, 0, 128, 0.20)' }}>
-
-                                        <Circle center={granules[id].coordaltmax} pathOptions={{ color: 'red', fillColor: 'red', opacity: 1, fillOpacity: 1 }} radius={2000} stroke={false}>
-                                            <Popup>
-                                                <p>Coordonatele punctului cel mai înalt de pe hartă</p>
-                                            </Popup>
-                                        </Circle>
-
-                                        <Circle center={granules[id].coordaltmin} pathOptions={{ color: 'green', fillColor: 'green', opacity: 1, fillOpacity: 1 }} radius={2000} stroke={false}>
-                                            <Popup>
-                                                <p>Coordonatele punctului cel mai înalt de pe hartă</p>
-                                            </Popup>
-                                        </Circle>
-
-                                    </FeatureGroup>
-
-                                </LayersControl.Overlay>
-
-
-
-
-                            </LayersControl>
-                        </MapContainer>
-                    </div>
                 </div>
-            </div>
+            )}
+
 
         </div>
     )
@@ -310,13 +249,12 @@ export default function GranulePage() {
     const granulePages = [
         { title: "Detalii generale despre teritoriu", icon: TbMap, page: 'details', element: Details },
         { title: "Model 3D al terenului", icon: TbMountain, page: 'elevation_model', element: ElevationModel },
-        { title: "Date despre sol", icon: TbDatabaseStar, page: 'soil_details', element: SoilComp },
-        { title: "Resurse naturale", icon: TbSun, page: 'soil_composition', element: SoilRes }
+        { title: "Date despre sol", icon: TbDatabaseStar, page: 'soil_details', element: SoilComp }
     ]
 
     return (
         <>
-            <MapNavbar />
+            <MapNavbar centerClassName={"lg:hidden"} />
             <div className="drawer lg:drawer-open">
 
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />

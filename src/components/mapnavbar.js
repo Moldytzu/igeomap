@@ -1,7 +1,7 @@
 import { TbAirBalloon, TbInfoCircle, TbSelect, TbSelector, TbSquare, TbSquareArrowDown, TbSquareRoundedArrowDown, TbTools, TbWaveSquare, TbWorld, TbWorldStar } from "react-icons/tb";
 import { Link } from "react-router-dom";
 
-export default function MapNavbar({ children, location }) {
+export default function MapNavbar({ children, location, centerClassName }) {
     return (
         <div className="navbar bg-base-100 border-b-4 fixed top-0">
             <div className="navbar-start">
@@ -11,7 +11,7 @@ export default function MapNavbar({ children, location }) {
                     </label>
                 </div>
             </div>
-            <div className="navbar-center lg:hidden">
+            <div className={`navbar-center ${centerClassName}`}>
                 <Link to='/' className="btn btn-ghost normal-case font-bold text-xl"><TbWorldStar /> igeomap</Link>
             </div>
             <div className="navbar-end">

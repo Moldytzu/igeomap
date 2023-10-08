@@ -15,7 +15,7 @@ function App() {
       <MapDrawer location={clocation}>
         <MapNavbar />
 
-        <MapContainer style={{ zIndex: 0 }} className="markercluster-map" center={center} zoom={7} scrollWheelZoom={false}>
+        <MapContainer style={{ zIndex: 0 }} className="markercluster-map" center={center} zoom={7} scrollWheelZoom={false} minZoom={7} maxBounds={[[52,10] /* Centrul Germaniei */,[40,38.5] /* Estul Turciei */]}>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

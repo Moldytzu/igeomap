@@ -69,7 +69,7 @@ function Details({ granules, id }) {
                                         <ImageOverlay
                                             url={granules[id].image}
                                             bounds={granules[id].coord}
-                                            opacity={0.7}
+                                            opacity={0.85}
                                             zIndex={0}
                                         />
 
@@ -117,7 +117,7 @@ function ElevationModel({ granules, id }) {
         <div className="hero bg-base-100">
             <div className="hero-content flex-col lg:flex-row-reverse">
                 <div>
-
+                    <img style={{transform: `scaleX(-1)`}} src={granules[id].image3d}></img>
                 </div>
             </div>
         </div>

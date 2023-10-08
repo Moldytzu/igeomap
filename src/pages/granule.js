@@ -1,10 +1,12 @@
 import { Link, useParams } from "react-router-dom";
 import MapNavbar from "../components/mapnavbar";
-import { TbArrowDown, TbArrowRight, TbArrowUp, TbCircle, TbCircleFilled, TbDatabase, TbDatabaseLeak, TbDatabaseStar, TbLocation, TbMap, TbMountain, TbPlane, TbSun, TbWorld, TbWorldStar } from "react-icons/tb";
-import {useEffect} from 'react';
+import { TbArrowDown, TbArrowRight, TbArrowUp, TbCircle, TbCircleFilled, TbDatabase, TbDatabaseLeak, TbDatabaseStar, TbFile3D, TbLocation, TbMap, TbMountain, TbPlane, TbSun, TbWorld, TbWorldStar } from "react-icons/tb";
+import { useEffect } from 'react';
 import { MapContainer, TileLayer, FeatureGroup, Rectangle, LayersControl, ImageOverlay, Popup, Circle } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import ImageZoom from "react-image-zooom";
 import granules from "../data/granules";
+import stylePropObject from "eslint-plugin-react/lib/rules/style-prop-object";
 
 function Details({ granules, id }) {
 
@@ -53,7 +55,7 @@ function Details({ granules, id }) {
                     </div>
 
                     <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                        <MapContainer className="granule-map" center={center} zoom={9.40} scrollWheelZoom={false}>
+                        <MapContainer className="granule-map" center={center} zoom={9.40}  scrollWheelZoom={true} minZoom={8}>
                             <TileLayer
                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -114,10 +116,17 @@ function Details({ granules, id }) {
 
 function ElevationModel({ granules, id }) {
     return (
-        <div className="hero bg-base-100">
-            <div className="hero-content flex-col lg:flex-row-reverse">
-                <div>
-                    <img style={{transform: `scaleX(-1)`}} src={granules[id].image3d}></img>
+        <div className="hero text-center bg-base-100">
+            <div className="hero-content flex-col lg:flex-row-reverse justify-content-center">
+                <div  className="max-w-3xl rounded-2xl shadow-2xl">
+
+                <ImageZoom
+                    src={granules[id].image3d}
+                    alt={granules[id].coord}
+                    zoom="300"
+                />
+
+                <p className="font-bold text-xl pb-2"><TbFile3D size={25} className="inline-block" /> N{granules[id].coord[0][0]}E0{granules[id].coord[0][1]}.hgt</p>
                 </div>
             </div>
         </div>
@@ -168,7 +177,7 @@ function SoilComp({ granules, id }) {
                         </div>
 
                         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                            <MapContainer className="granule-map" center={center} zoom={9.40} scrollWheelZoom={false}>
+                            <MapContainer className="granule-map" center={center} zoom={9.40} scrollWheelZoom={true} minZoom={8}>
                                 <TileLayer
                                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

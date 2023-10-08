@@ -26,3 +26,7 @@
   .drawer-side {
     z-index: 100;
   }
+
+  img {
+    user-select: none !important;
+  }

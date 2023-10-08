@@ -7,8 +7,6 @@ const pages = [
 ]
 
 function MapDrawer({ children, location }) {
-
-    console.log(location)
     return (
         <div className="drawer">
             <input id="map_drawer" type="checkbox" className="drawer-toggle" />
@@ -20,8 +18,8 @@ function MapDrawer({ children, location }) {
                 <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
                     {/* Sidebar content here */}
 
-                    {pages.map((page) => (
-                        <li >
+                    {pages.map((page, index) => (
+                        <li key={index}>
                             <Link to={page.path} className={page.path == location.pathname ? 'active' : ''}>
                                 <page.icon size={23} className="inline-block" /> {page.title}
                             </Link>

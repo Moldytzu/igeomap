@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .markercluster-map {
     height: 90vh;
     margin-top: 68px !important;
@@ -30,3 +29,4 @@
   img {
     user-select: none !important;
   }
+

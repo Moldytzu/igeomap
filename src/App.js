@@ -11,8 +11,6 @@ function App() {
   const clocation = useLocation();
   var center = [46, 24] // Romania
 
-  console.log(localStorage.lastGranuleCoord)
-
   if (localStorage.lastGranuleCoord) {
 
     center = [
@@ -36,8 +34,8 @@ function App() {
             <LayersControl.Overlay checked={true} name="Date HTG preluate din NASA Shuttle Radar Topography Mission Global 1 arc second V003">
 
               <FeatureGroup pathOptions={{ color: 'rgba(128, 0, 128, 0.1)' }}>
-                {granules.map((granule) => (
-                  <>
+                {granules.map((granule, index) => (
+                  <div key={index}>
                     <Rectangle bounds={granule.coord}>
                       <GranulePopup granule={granule} />
                     </Rectangle>
@@ -48,7 +46,7 @@ function App() {
                       opacity={0.7}
                       zIndex={0}
                     />
-                  </>
+                  </div>
 
                 ))}
               </FeatureGroup>

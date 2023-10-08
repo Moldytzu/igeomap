@@ -13,8 +13,6 @@ function Details({ granules, id }) {
     const center = [(granules[id].coord[0][0] + granules[id].coord[1][0]) / 2, (granules[id].coord[0][1] + granules[id].coord[1][1]) / 2];
 
     return (
-        <div className="hero bg-base-200">
-
             <div className="hero bg-base-200 lg:mt-0" style={{ height: '100%' }}>
                 <div className="hero-content flex-col xl:flex-row">
                     <div className="lg:text-left lg:pr-10">
@@ -23,7 +21,7 @@ function Details({ granules, id }) {
                         </div>
                         <p>{granules[id].text}</p>
                         <div className="divider" />
-                        <div class="grid grid-cols-2 gap-2 md:gap-3">
+                        <div className="grid grid-cols-2 gap-2 md:gap-3">
                             <div className="card shadow-xl bg-base-100">
                                 <div className="card-body">
                                     <h2 className="card-title text-sm md:text-xl"><TbCircleFilled className="inline-block" style={{ color: 'red' }} /> Punct alt. maximă</h2>
@@ -55,7 +53,7 @@ function Details({ granules, id }) {
                     </div>
 
                     <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                        <MapContainer className="granule-map" center={center} zoom={9.40}  scrollWheelZoom={true} minZoom={8}>
+                        <MapContainer className="granule-map" center={center} zoom={9.40} scrollWheelZoom={true} minZoom={8}>
                             <TileLayer
                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -107,27 +105,22 @@ function Details({ granules, id }) {
                     </div>
                 </div>
             </div>
-
-
-
-        </div>
     )
 }
 
 function ElevationModel({ granules, id }) {
     return (
-        <div className="hero text-center bg-base-100">
-            <div className="hero-content flex-col lg:flex-row-reverse justify-content-center">
-                <div  className="max-w-3xl rounded-2xl shadow-2xl">
+        <div className="hero min-h-screen bg-base-200">
+            <div className="hero-content text-center">
+                    <div className="max-w-2xl rounded-2xl shadow-2xl">
+                        <ImageZoom
+                            src={granules[id].image3d}
+                            alt={granules[id].coord}
+                            zoom="300"
+                        />
 
-                <ImageZoom
-                    src={granules[id].image3d}
-                    alt={granules[id].coord}
-                    zoom="300"
-                />
-
-                <p className="font-bold text-xl pb-2"><TbFile3D size={25} className="inline-block" /> N{granules[id].coord[0][0]}E0{granules[id].coord[0][1]}.hgt</p>
-                </div>
+                        <p className="font-bold text-xl pb-2"><TbFile3D size={25} className="inline-block" /> N{granules[id].coord[0][0]}E0{granules[id].coord[0][1]}.hgt</p>
+                    </div>
             </div>
         </div>
     )
@@ -152,20 +145,20 @@ function SoilComp({ granules, id }) {
                 <div className="hero bg-base-200 lg:mt-0" style={{ height: '100%' }}>
                     <div className="hero-content flex-col xl:flex-row">
                         <div className="lg:text-left pr-10">
-                            <div className="overflow-x-auto">
+                            <div className="overflow-x-auto lg:bg-base-100 lg:rounded-xl lg:shadow-2xl lg:px-10 py-5">
                                 <table className="table">
                                     {/* head */}
                                     <thead>
                                         <tr>
-                                            <th>Tipul Solului</th>
-                                            <th>Locația</th>
-                                            <th>Dataset Sursă</th>
+                                            <th><p className="font-bold">Tipul Solului</p></th>
+                                            <th><p className="font-bold">Locația</p></th>
+                                            <th><p className="font-bold">Dataset Sursă</p></th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
-                                        {granules[id].soilComp.map((soil) => (
-                                            <tr>
+                                        {granules[id].soilComp.map((soil, index) => (
+                                            <tr key={index}>
                                                 <th>{soil.type}</th>
                                                 <th>{soil.coord[0]}, {soil.coord[1]}</th>
                                                 <th>{soil.dataset}</th>
@@ -225,8 +218,8 @@ function SoilComp({ granules, id }) {
 
                                         <FeatureGroup pathOptions={{ color: 'rgba(128, 0, 128, 0.20)' }}>
 
-                                            {granules[id].soilComp.map((soilCompx) => (
-                                                <Circle center={soilCompx.coord} pathOptions={{ color: 'blue', fillColor: 'blue', opacity: 1, fillOpacity: 1 }} radius={2000} stroke={false}>
+                                            {granules[id].soilComp.map((soilCompx, index) => (
+                                                <Circle key={index} center={soilCompx.coord} pathOptions={{ color: 'blue', fillColor: 'blue', opacity: 1, fillOpacity: 1 }} radius={2000} stroke={false}>
                                                     <Popup>
                                                         <p className="font-bold text-xl">{soilCompx.type}</p>
                                                     </Popup>
@@ -236,9 +229,6 @@ function SoilComp({ granules, id }) {
                                         </FeatureGroup>
 
                                     </LayersControl.Overlay>
-
-
-
 
                                 </LayersControl>
                             </MapContainer>
@@ -272,27 +262,27 @@ export default function GranulePage() {
 
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content flex flex-col">
-                    {granulePages.map((granulePage) => (
+                    {granulePages.map((granulePage, index) => (
                         granulePage.page == page ? (
-                            <granulePage.element granules={granules} id={id} />
+                            <granulePage.element key={index} granules={granules} id={id} />
                         ) : (<></>)
                     ))}
                     <div className="btm-nav lg:hidden">
-                        {granulePages.map((granulePage) => (
-                            <Link to={`/granule/${id}/${granulePage.page}`} className={`font-bold ${page == granulePage.page ? 'active' : ''}`}>
+                        {granulePages.map((granulePage, index) => (
+                            <Link  to={`/granule/${id}/${granulePage.page}`} key={index} className={`font-bold ${page == granulePage.page ? 'active' : ''}`}>
                                 <granulePage.icon />
                             </Link>
                         ))}
                     </div>
                 </div>
-                <div className="drawer-side border-r-4 overflow-hidden">
+                <div className="drawer-side lg:border-r-4 border-base-200 overflow-hidden">
                     <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
 
                     <ul className="menu p-4 w-80 min-h-full bg-base-100 text-base-content gap-4 ">
                         <Link to='/' className="btn btn-ghost normal-case font-bold text-xl"><TbWorldStar /> igeomap</Link>
                         {/* Sidebar content here */}
-                        {granulePages.map((granulePage) => (
-                            <li><Link to={`/granule/${id}/${granulePage.page}`} className={`font-bold border-2 ${page == granulePage.page ? 'active' : ''}`}><granulePage.icon className="inline-block" /> {granulePage.title}</Link></li>
+                        {granulePages.map((granulePage, index) => (
+                            <li key={index}><Link to={`/granule/${id}/${granulePage.page}`} className={`font-bold border-2 ${page == granulePage.page ? 'active' : ''}`}><granulePage.icon className="inline-block" /> {granulePage.title}</Link></li>
                         ))}
                     </ul>
 

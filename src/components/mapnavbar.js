@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function MapNavbar({ children, location, centerClassName }) {
     return (
-        <div className="navbar bg-base-100 border-b-4 fixed top-0">
+        <div className="navbar bg-base-100 border-b-4 border-base-200 fixed top-0">
             <div className="navbar-start">
                 <div className="dropdown">
                     <label htmlFor="map_drawer" className="btn btn-ghost btn-circle">

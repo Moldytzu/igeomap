@@ -5,17 +5,28 @@ import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, FeatureGroup, Rectangle, LayersControl, ImageOverlay } from 'react-leaflet';
 import GranulePopup from "./components/mapgranulepopup";
 import granules from "./data/granules";
+import { useEffect } from 'react';
 
 function App() {
   const clocation = useLocation();
-  const center = [46, 24] // Romania
+  var center = [46, 24] // Romania
+
+  console.log(localStorage.lastGranuleCoord)
+
+  if (localStorage.lastGranuleCoord) {
+
+    center = [
+      (JSON.parse(localStorage.lastGranuleCoord)[0][0] + JSON.parse(localStorage.lastGranuleCoord)[1][0]) / 2,
+      (JSON.parse(localStorage.lastGranuleCoord)[0][1] + JSON.parse(localStorage.lastGranuleCoord)[1][1]) / 2
+    ];
+  }
 
   return (
     <div className="App">
       <MapDrawer location={clocation}>
         <MapNavbar />
 
-        <MapContainer style={{ zIndex: 0 }} className="markercluster-map" center={center} zoom={7} scrollWheelZoom={false} minZoom={7} maxBounds={[[52,10] /* Centrul Germaniei */,[40,38.5] /* Estul Turciei */]}>
+          <MapContainer style={{ zIndex: 0 }} className="markercluster-map" center={center} zoom={localStorage.lastGranuleCoord ? 8 : 7} scrollWheelZoom={true} minZoom={7} maxBounds={[[52, 10] /* Centrul Germaniei */, [40, 38.5] /* Estul Turciei */]}>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

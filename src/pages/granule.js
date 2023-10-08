@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import MapNavbar from "../components/mapnavbar";
 import { TbArrowDown, TbArrowRight, TbArrowUp, TbCircle, TbCircleFilled, TbDatabase, TbDatabaseLeak, TbDatabaseStar, TbLocation, TbMap, TbMountain, TbPlane, TbSun, TbWorld, TbWorldStar } from "react-icons/tb";
-
+import {useEffect} from 'react';
 import { MapContainer, TileLayer, FeatureGroup, Rectangle, LayersControl, ImageOverlay, Popup, Circle } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import granules from "../data/granules";
@@ -251,6 +251,10 @@ export default function GranulePage() {
         { title: "Model 3D al terenului", icon: TbMountain, page: 'elevation_model', element: ElevationModel },
         { title: "Date despre sol", icon: TbDatabaseStar, page: 'soil_details', element: SoilComp }
     ]
+
+    useEffect(() => {
+        localStorage.setItem('lastGranuleCoord', JSON.stringify(granules[id].coord));
+    }, [])
 
     return (
         <>

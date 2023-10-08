@@ -1,4 +1,4 @@
-from gmalthgtparser import HgtParser
+from gmalthgtparser import HgtParser # bilioteca din pip a parserului hgt
 
 # globale
 rezolutie = 0.001 # in productie seteaza la 0.001 (latura de 1000)
@@ -12,21 +12,22 @@ print(f"parser: {rezolutie=} {latura=}")
 def iaElevatie(parser, long, lat):
     return parser.get_elevation((long, lat))[2]
 
+# returneaza toate punctele din datele topografice
 def iaPuncteHGT(fisier):
-    lista = []
+    puncte = []
     with HgtParser(fisier) as parser:
-        # luam coordonatele geografice
+        # luam coordonatele geografice din numele fisierului
         coord = fisier[10:][:7]
         lat = int(coord[4:])
         long = int(coord[1:][:2])
 
-        # le inseram in lista de puncte
+        # le inseram in puncte de puncte
         for y in range(1, latura, 1):
             for x in range(1, latura, 1):
-                lista.append((x  * rezolutie, y  * rezolutie, iaElevatie(parser, long + y * rezolutie, lat + x * rezolutie)))
+                puncte.append((x  * rezolutie, y  * rezolutie, iaElevatie(parser, long + y * rezolutie, lat + x * rezolutie)))
 
     print("parser: gata")
 
-    return lista
+    return puncte
 
 

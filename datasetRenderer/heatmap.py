@@ -1,15 +1,15 @@
 import matplotlib.pyplot as plt
 from matplotlib import cm
 
-from parser import *  # bibliotea noastra magica
+from parser import *  # wrapper al parserului
 
 def genereazaHeatMapDin(fisier):
-    lista = iaPuncteHGT(fisier)
+    puncte = iaPuncteHGT(fisier)
 
     iesire = fisier.replace('hgt', 'png')
 
-    # despartim valorile din lista
-    x, y, z = zip(*lista)
+    # despartim valorile din puncte
+    x, y, z = zip(*puncte)
 
     # scoatem marginile albe
     plt.axis("off")

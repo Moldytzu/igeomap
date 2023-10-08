@@ -1,4 +1,4 @@
-from parser import *
+from parser import *  # wrapper al parserului
 
 def genereazaLinkImagineNASA(imagine):
     return f"https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2014.11.20/{imagine}.SRTMGL1.2.jpg"
@@ -60,6 +60,7 @@ def genereazaJSON(fisier, index):
 
     return output
 
+# genereaza un json intr-un format favorabil folosit de aplicatia react
 fisier = open("out.json","w+")
 
 fisier.write("[")
